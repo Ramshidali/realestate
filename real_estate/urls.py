@@ -7,10 +7,10 @@ from real_estate import settings
 from main import views as general_views
 
 urlpatterns = [
-    path('',general_views.app,name='app'),
+    path('',include(('main.urls'),namespace='main')),
     path('admin/', admin.site.urls),
     path('app/accounts/', include('registration.backends.default.urls')),
-    path('super-admin/main/',include(('main.urls'),namespace='main')),
+    path('super-admin/main/',general_views.app,name='app'),
     
     path('super-admin/admin-user/',include(('admin_user.urls'),namespace='admin_user')),
     path('super-admin/property/',include(('property.urls'),namespace='property')),

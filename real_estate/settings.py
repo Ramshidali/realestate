@@ -141,7 +141,7 @@ USE_TZ = True
 
 LOGIN_URL = '/app/accounts/login/'
 LOGOUT_URL = '/app/accounts/logout/'
-LOGIN_REDIRECT_URL = '/super-admin/'
+LOGIN_REDIRECT_URL = '/super-admin/main/'
 LOGOUT_REDIRECT_URL = '/app/accounts/login/'
 
 MEDIA_URL = '/media/'
