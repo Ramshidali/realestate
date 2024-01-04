@@ -1,0 +1,190 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Page Content-->
+    <div class="page-content">
+        <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="row">
+                            <div class="col">
+                                <h4 class="page-title">Property Info</h4>
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript:void(0);">Property Details</a></li>
+                                </ol>
+                            </div><!--end col-->
+                            
+                        </div><!--end row-->                                                              
+                    </div><!--end page-title-box-->
+                </div><!--end col-->
+            </div><!--end row-->
+            <!-- end page title end breadcrumb -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            
+                            <div class="dastone-profile border-bottom pb-4">
+                                <div class="row">
+                                    <div class="col-lg-4 align-self-center mb-3 mb-lg-0">
+                                        <div class="dastone-profile-main">
+                                            <div class="dastone-profile-main-pic">
+                                                {% if instance.image %}
+                                                <img src="{{instance.image.url}}" alt="" class="rounded-circle" style="height:100%;width:100%;">
+                                                {% else %}
+                                                <span><i class="fas fa-camera"></i></span>
+                                                {% endif %}
+                                            </div>
+                                            <div class="dastone-profile_user-detail">
+                                                <h5 class="dastone-user-name">{{instance.name}}</h5>                                                        
+                                            </div>
+                                        </div>                                                
+                                    </div><!--end col-->
+                                    
+                                    <div class="col-lg-4 ml-auto align-self-center">
+                                        <ul class="list-unstyled personal-detail mb-0">
+                                            <li class=""><i class="las la-map-marker-alt mr-2 text-secondary font-22 align-middle"></i> <b> Location </b> : {{instance.location}}</li>
+                                            <li class="mt-2"><i class="lar la-address-book text-secondary font-22 align-middle mr-2"></i> <b> Address </b> : {{instance.address}}</li>
+                                        </ul>
+                                       
+                                    </div><!--end col-->
+
+                                    <div class="col-lg-4 ml-auto align-self-center">
+                                       
+                                    </div><!--end col-->
+                                </div><!--end row-->
+                            </div><!--end f_profile--> 
+                            <div class="media my-3">
+                                <div class="media-body align-self-center ml-3 text-truncate">
+                                    <h4 class="my-0 font-weight-bold">Features</h4>
+                                    <p class="text-muted mt-2 font-13">{{instance.features|safe}}</p>
+                                </div><!--end media-body-->
+                            </div>                                                                                      
+                        </div><!--end card-body-->          
+                    </div> <!--end card-->    
+                </div><!--end col-->
+            </div><!--end row-->
+
+            <div class="row">
+                {% for u in units %}
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="{% if u.main_image %} {{u.main_image.url}} {% endif %}" alt="" class="d-block mx-auto my-4" height="150">
+                            <div class="row my-4">
+                                <div class="col">
+                                    <a href="apps-ecommerce-products.html#" class="title-text d-block">{{u.get_type_display}} {{u.property.name}}</a>
+                                </div>
+                                <div class="col-auto">
+                                    <h4 class="text-dark mt-0">Rs. {{u.rent_cost}}/- </h4>  
+                                    <ul class="list-inline mb-0 product-review align-self-center">
+                                        <li class="list-inline-item"><i class="la la-star text-warning font-16"></i></li>
+                                        <li class="list-inline-item"><i class="la la-star text-warning font-16 ml-n2"></i></li>
+                                        <li class="list-inline-item"><i class="la la-star text-warning font-16 ml-n2"></i></li>
+                                        <li class="list-inline-item"><i class="la la-star text-warning font-16 ml-n2"></i></li>
+                                        <li class="list-inline-item"><i class="la la-star-half-o text-warning font-16 ml-n2"></i></li>
+                                    </ul> 
+                                </div>      
+                            </div> 
+                            <a href="{% url 'property:assign_property_tenant' unit_id=u.pk %}"><button class="btn btn-soft-primary btn-block">Assign To</button></a>  
+                        </div><!--end card-body-->
+                    </div><!--end card-->
+                </div><!--end col-->
+                {% endfor %}
+            </div>  <!--end row-->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Assigned Tenant Details</h4>
+                        </div>
+                        <!--end card-header-->
+                        <div class="card-body">
+                            
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>SL.No</th>
+                                            <th>Tenant Name</th>
+                                            <th>Unit</th>
+                                            <th>Agreement End Date</th>
+                                            <th>Monthly Rent Date</th>
+                                            <th class="text-right">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for at in assigned_tenants %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{at.tenant.name}}</td>
+                                            <td>{{at.unit.get_type_display}}</td>
+                                            <td>{{at.agreement_end_date}}</td>
+                                            <td>{{at.monthly_rent_date}}</td>
+                                                
+                                            <td class="text-right">
+                                                <a href="{% url 'property:property_info' pk=instance.pk %}"><i class="las la-eye text-info font-18"></i></a>
+                                                <a href="{% url 'property:edit_property' pk=instance.pk %}"><i class="las la-pen text-info font-18"></i></a>
+                                                <a class="action-button remove btn btn-default btn-icon" style="padding:0;"
+                                                 data-id="{{instance.pk}}" data-text="{{confirm_delete_message}}" data-title="Are you sure?" href="{% url 'property:delete_property' pk=instance.pk %}"><i class="las la-trash-alt text-danger font-18"></i></a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <!--end /table-->
+                            </div>
+                            <!--end /tableresponsive-->
+                            <!-- pagination -->
+                            
+                        </div>
+                        <!--end card-body-->
+                    </div>
+                    <!--end card-->
+                </div> <!-- end col -->
+            </div>
+            
+        </div><!-- container -->
+    </div>
+    <!-- end page content -->
+{% endblock content %}
+
+{% block static %}
+    {% load static %}
+    <!-- stylessssssssssss -->
+    {{form.media}}
+    <style>
+        .dastone-profile .dastone-profile-main .dastone-profile-main-pic {
+            position: relative;
+            width: 128px;
+            height: 128px;
+            margin-right: 18px;
+            background-color: #f3f3f3;
+            border-radius: 100px;
+            color: #fff;
+        }
+        .dastone-profile-main-pic span{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            font-size: 50px;
+            font-weight: 600;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $(".download-cv").click(function() {
+                var downloadUrl = $(this).attr('data-url');  // Replace with the actual URL
+                window.location.href = downloadUrl;
+            });
+        });
+    </script>
+{% endblock  %}
+        

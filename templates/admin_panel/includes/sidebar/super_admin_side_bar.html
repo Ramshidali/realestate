@@ -1,0 +1,48 @@
+{% load static %}
+
+<div class="left-sidenav">
+    <!-- LOGO -->
+    <div class="brand">
+        <a href="{% url 'app' %}" class="logo">
+            <span>
+                <img src="" alt="logo-small" class="logo-sm" style="height: 85px;">
+            </span>
+        </a>
+    </div>
+    <!--end logo-->
+    <div class="menu-content h-100" data-simplebar>
+        <ul class="metismenu left-sidenav-menu">
+            <li class="menu-label mt-0">Main</li>
+            <li>
+                <a href="{% url 'app' %}"> <i data-feather="home" class="align-self-center menu-icon"></i><span>Dashboard</span><span class="menu-arrow"><i class="mdi mdi-chevron-down"></i></span></a>
+            </li>
+            <li>
+                <a href="javascript: void(0);"> <i data-feather="users" class="align-self-center menu-icon"></i><span>Admin Users</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li class="nav-item d-flex justify-content-between">
+                        <a class="nav-link" href="{% url 'admin_user:admin_user_list' %}"><i class="ti-control-record"></i>Users List</a>
+                        <a class="nav-link" href="{% url 'admin_user:create_admin_user' %}"><i class="ti-plus"></i></a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript: void(0);"> <i data-feather="users" class="align-self-center menu-icon"></i><span>Property</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li class="nav-item d-flex justify-content-between">
+                        <a class="nav-link" href="{% url 'property:property_list' %}"><i class="ti-control-record"></i>Property List</a>
+                        <a class="nav-link" href="{% url 'property:create_property' %}"><i class="ti-plus"></i></a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript: void(0);"> <i data-feather="users" class="align-self-center menu-icon"></i><span>Tenant</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li class="nav-item d-flex justify-content-between">
+                        <a class="nav-link" href="{% url 'tenant:tenant_list' %}"><i class="ti-control-record"></i>Tenant List</a>
+                        <a class="nav-link" href="{% url 'tenant:create_tenant' %}"><i class="ti-plus"></i></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

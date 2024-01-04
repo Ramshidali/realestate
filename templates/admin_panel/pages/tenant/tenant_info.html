@@ -1,0 +1,134 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Page Content-->
+    <div class="page-content">
+        <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="row">
+                            <div class="col">
+                                <h4 class="page-title">Tenant Info</h4>
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript:void(0);">Tenant Details</a></li>
+                                </ol>
+                            </div><!--end col-->
+                            
+                        </div><!--end row-->                                                              
+                    </div><!--end page-title-box-->
+                </div><!--end col-->
+            </div><!--end row-->
+            <!-- end page title end breadcrumb -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            
+                            <div class="dastone-profile border-bottom pb-4">
+                                <div class="row">
+                                    <div class="col-lg-4 align-self-center mb-3 mb-lg-0">
+                                        <div class="dastone-profile-main">
+                                            <div class="dastone-profile-main-pic">
+                                                {% if instance.image %}
+                                                <img src="{{instance.image.url}}" alt="" class="rounded-circle" style="height:100%;width:100%;">
+                                                {% else %}
+                                                <span><i class="fas fa-camera"></i></span>
+                                                {% endif %}
+                                            </div>
+                                            <div class="dastone-profile_user-detail">
+                                                <h5 class="dastone-user-name">{{instance.name}}</h5>                                                        
+                                            </div>
+                                        </div>                                                
+                                    </div><!--end col-->
+                                    
+                                    <div class="col-lg-4 ml-auto align-self-center">
+                                        <ul class="list-unstyled personal-detail mb-0">
+                                            <li class="mt-2"><i class="lar la-address-book text-secondary font-22 align-middle mr-2"></i> <b> Address </b> : {{instance.address}}</li>
+                                        </ul>
+                                       
+                                    </div><!--end col-->
+
+                                    <div class="col-lg-4 ml-auto align-self-center">
+                                       
+                                    </div><!--end col-->
+                                </div><!--end row-->
+                            </div><!--end f_profile--> 
+                            <div class="media my-3">
+                                <div class="media-body align-self-center ml-3 text-truncate">
+                                    <h4 class="my-0 font-weight-bold">Documents</h4>
+                                    <div class="file-box-content mt-4">
+                                        {% for d in documents %}
+                                            {% if d %}
+                                            {% if d.document.type == 'image' %}
+                                            <img src="{{ d.document.url }}" alt="Attached Image">
+                                            {% elif d.document.type == 'pdf' %}
+                                            <iframe src="{{ d.document.url }}" width="100%" height="500px"></iframe>
+                                            {% else %}
+                                            <div class="file-box">
+                                                <a href="{{ d.document.url }}" class="download-icon-link" download>
+                                                    <i class="dripicons-download file-download-icon"></i>
+                                                </a>
+                                                <div class="text-center">
+                                                    <i class="lar la-file-code text-danger"></i>
+                                                    <h6 class="text-truncate">{{d.get_name_display}}</h6>
+                                                </div>                                                        
+                                            </div>
+                                            {% endif %}
+                                            {% else %}
+                                            --
+                                            {% endif %}
+
+                                        
+                                        {% endfor %}
+                                    </div>
+                                </div><!--end media-body-->
+                            </div>                                                                                      
+                        </div><!--end card-body-->          
+                    </div> <!--end card-->    
+                </div><!--end col-->
+            </div><!--end row-->
+            
+        </div><!-- container -->
+    </div>
+    <!-- end page content -->
+{% endblock content %}
+
+{% block static %}
+    {% load static %}
+    <!-- stylessssssssssss -->
+    {{form.media}}
+    <style>
+        .dastone-profile .dastone-profile-main .dastone-profile-main-pic {
+            position: relative;
+            width: 128px;
+            height: 128px;
+            margin-right: 18px;
+            background-color: #f3f3f3;
+            border-radius: 100px;
+            color: #fff;
+        }
+        .dastone-profile-main-pic span{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            font-size: 50px;
+            font-weight: 600;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $(".download-cv").click(function() {
+                var downloadUrl = $(this).attr('data-url');  // Replace with the actual URL
+                window.location.href = downloadUrl;
+            });
+        });
+    </script>
+{% endblock  %}
+        
